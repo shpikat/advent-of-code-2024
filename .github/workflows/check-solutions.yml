@@ -1,0 +1,23 @@
+name: Check solutions
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Java JDK
+        uses: actions/setup-java@v4.5.0
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: gradle
+      - name: Check with Gradle
+        run: ./gradlew check
