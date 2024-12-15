@@ -1,12 +1,16 @@
 package com.shpikat.adventofcode2024
 
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Named.named
+import org.junit.jupiter.api.Named
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 
-private const val sample: String = """
+class Day01Test {
+    companion object {
+        private val clazz = Day01::class.java
+
+        private const val SAMPLE = """
 3   4
 4   3
 2   5
@@ -15,14 +19,25 @@ private const val sample: String = """
 3   3
 """
 
-private const val inputFilename: String = "day01_input.txt"
-private const val part1SampleAnswer: String = "11"
-private const val part1Answer: String = "3574690"
-private const val part2SampleAnswer: String = "31"
-private const val part2Answer: String = "22565391"
+        private const val ANSWER_PART1_SAMPLE = "11"
+        private const val ANSWER_PART1_PUZZLE = "3574690"
+        private const val ANSWER_PART2_SAMPLE = "31"
+        private const val ANSWER_PART2_PUZZLE = "22565391"
 
-class Day01Test {
-    private val day = Day01()
+        @JvmStatic
+        fun testDataForPart1() = listOf(
+            Arguments.of(Named.named("sample", SAMPLE.trim()), ANSWER_PART1_SAMPLE),
+            Arguments.of(Named.named("puzzle input", readPuzzleInput(clazz)), ANSWER_PART1_PUZZLE),
+        )
+
+        @JvmStatic
+        fun testDataForPart2() = listOf(
+            Arguments.of(Named.named("sample", SAMPLE.trim()), ANSWER_PART2_SAMPLE),
+            Arguments.of(Named.named("puzzle input", readPuzzleInput(clazz)), ANSWER_PART2_PUZZLE),
+        )
+    }
+
+    private val day = clazz.getDeclaredConstructor().newInstance()
 
     @ParameterizedTest()
     @MethodSource("testDataForPart1")
@@ -34,19 +49,5 @@ class Day01Test {
     @MethodSource("testDataForPart2")
     fun testPart2(input: String, expected: String) {
         assertEquals(expected, day.solvePart2(input))
-    }
-
-    companion object {
-        @JvmStatic
-        fun testDataForPart1() = listOf(
-            Arguments.of(named("sample", sample.trim()), part1SampleAnswer),
-            Arguments.of(named("puzzle input", readInput(inputFilename)), part1Answer),
-        )
-
-        @JvmStatic
-        fun testDataForPart2() = listOf(
-            Arguments.of(named("sample", sample.trim()), part2SampleAnswer),
-            Arguments.of(named("puzzle input", readInput(inputFilename)), part2Answer),
-        )
     }
 }
