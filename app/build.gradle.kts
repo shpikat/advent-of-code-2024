@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.kotlin.jvm)
     application
+    id("idea")
 }
 
 repositories {
@@ -20,4 +21,11 @@ java {
 
 tasks.named<Test>("test") {
     useJUnitPlatform()
+}
+
+idea {
+    module {
+        isDownloadJavadoc = true
+        isDownloadSources = true
+    }
 }
